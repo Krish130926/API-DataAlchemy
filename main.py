@@ -1,7 +1,6 @@
 import requests
-from bs4 import BeautifulSoup
-import time
 import csv
+import time
 
 # Function to fetch cryptocurrency prices using CoinGecko API with error handling
 def fetch_crypto_prices(crypto_symbol, currency):
@@ -17,23 +16,23 @@ def fetch_crypto_prices(crypto_symbol, currency):
         print(f"Failed to fetch crypto prices: {e}")
         return None
 
-# Function to scrape the latest news from CoinTelegraph with error handling
-def scrape_crypto_news(news_limit):
-    news_url = "https://cointelegraph.com/tags/cryptocurrencies"
+# Function to fetch the latest news from NewsAPI with error handling
+def fetch_crypto_news(news_limit, api_key):
+    news_url = f"https://newsapi.org/v2/everything?q=cryptocurrency&language=en&pageSize={news_limit}&apiKey={api_key}"
     try:
-        page = requests.get(news_url)
-        soup = BeautifulSoup(page.content, 'html.parser')
+        response = requests.get(news_url)
+        response.raise_for_status()  # Check if the request was successful
+        data = response.json()
         
-        # Update this line based on the current website structure
-        # Extract news headlines from <a> tags with specific classes
-        headlines = [headline.text.strip() for headline in soup.find_all('a', class_='post-card-inline__title-link')]
+        articles = data.get("articles", [])
+        headlines = [article['title'] for article in articles]
         
         print(f"\nLatest Crypto News (showing top {news_limit} articles):")
         for i, headline in enumerate(headlines[:news_limit], 1):  # Print based on user limit
             print(f"{i}. {headline}")
-        return headlines[:news_limit]  # Return based on user limit
-    except Exception as e:
-        print(f"Failed to scrape news: {e}")
+        return headlines[:news_limit]
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch news: {e}")
         return None
 
 # Rate limiter function to avoid overwhelming the API
@@ -62,14 +61,17 @@ if __name__ == "__main__":
     crypto_symbol = input("Enter the cryptocurrency symbol (e.g., bitcoin, ethereum): ").lower()
     currency = input("Enter the currency for conversion (e.g., usd, eur): ").lower()
 
-    # Take user input for the number of news articles to scrape
+    # Take user input for number of news articles to fetch
     news_limit = int(input("Enter the number of news articles you want to see (e.g., 5): "))
+
+    # Input your NewsAPI key here
+    api_key = 'your_newsapi_key_here'  # Replace with your actual NewsAPI key
 
     # Fetch crypto price with rate limiting and error handling
     price = rate_limited_request(fetch_crypto_prices, crypto_symbol, currency)
     
-    # Scrape the latest news with error handling and user-defined limit
-    news_headlines = rate_limited_request(scrape_crypto_news, news_limit)
+    # Fetch latest news with rate limiting and error handling
+    news_headlines = rate_limited_request(fetch_crypto_news, news_limit, api_key)
 
     # If both data gathering processes succeed, save to CSV
     if price and news_headlines:
