@@ -3,7 +3,7 @@ import csv
 import time
 
 # Your NewsAPI key
-NEWS_API_KEY = '277eb4bf-3e25-45ea-8365-2d02d0a8d172'
+NEWS_API_KEY = 'b4a53e8d98cd4876b54f4ba366d961ca'
 
 # Function to fetch cryptocurrency prices using CoinGecko API with error handling
 def fetch_crypto_prices(crypto_symbol, currency):
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     crypto_symbol = input("Enter the cryptocurrency symbol (e.g., bitcoin, ethereum): ").lower()
     currency = input("Enter the currency for conversion (e.g., usd, eur): ").lower()
 
-    # Take user input for number of news articles to fetch
+    # Take user input for the number of news articles to fetch
     news_limit = int(input("Enter the number of news articles you want to see (e.g., 5): "))
     
     # Take user input for keywords to filter news articles
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     # Fetch crypto price with rate limiting and error handling
     price = rate_limited_request(fetch_crypto_prices, crypto_symbol, currency)
 
-    # Fetch latest news with rate limiting and error handling
+    # Fetch the latest news with rate limiting and error handling
     news_headlines = rate_limited_request(fetch_crypto_news, news_limit, keyword)
 
     # If both data gathering processes succeed, save to CSV
