@@ -17,8 +17,10 @@ def fetch_crypto_prices(crypto_symbol, currency):
         return None
 
 # Function to fetch the latest news from NewsAPI with error handling
-def fetch_crypto_news(news_limit, api_key):
-    news_url = f"https://newsapi.org/v2/everything?q=cryptocurrency&language=en&pageSize={news_limit}&apiKey={api_key}"
+def fetch_crypto_news(news_limit, keyword=None):
+    api_key = '27a3d671-51e1-4814-bf68-1636c499c559'  # Your API key
+    query = f"cryptocurrency" if not keyword else keyword
+    news_url = f"https://newsapi.org/v2/everything?q={query}&language=en&pageSize={news_limit}&apiKey={api_key}"
     try:
         response = requests.get(news_url)
         response.raise_for_status()  # Check if the request was successful
@@ -27,7 +29,7 @@ def fetch_crypto_news(news_limit, api_key):
         articles = data.get("articles", [])
         headlines = [article['title'] for article in articles]
 
-        print(f"\nLatest Crypto News (showing top {news_limit} articles):")
+        print(f"\nLatest Crypto News (showing top {news_limit} articles for '{query}'):")
         for i, headline in enumerate(headlines[:news_limit], 1):  # Print based on user limit
             print(f"{i}. {headline}")
         return headlines[:news_limit]
@@ -63,15 +65,15 @@ if __name__ == "__main__":
 
     # Take user input for number of news articles to fetch
     news_limit = int(input("Enter the number of news articles you want to see (e.g., 5): "))
-
-    # Your NewsAPI key
-    api_key = '27a3d671-51e1-4814-bf68-1636c499c559'  # Your actual NewsAPI key
+    
+    # Take user input for keywords to filter news articles
+    keyword = input("Enter a keyword to filter news articles (or press Enter for all): ").strip() or None
 
     # Fetch crypto price with rate limiting and error handling
     price = rate_limited_request(fetch_crypto_prices, crypto_symbol, currency)
 
     # Fetch latest news with rate limiting and error handling
-    news_headlines = rate_limited_request(fetch_crypto_news, news_limit, api_key)
+    news_headlines = rate_limited_request(fetch_crypto_news, news_limit, keyword)
 
     # If both data gathering processes succeed, save to CSV
     if price and news_headlines:
