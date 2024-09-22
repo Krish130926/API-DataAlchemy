@@ -2,6 +2,9 @@ import requests
 import csv
 import time
 
+# Your NewsAPI key
+NEWS_API_KEY = '277eb4bf-3e25-45ea-8365-2d02d0a8d172'
+
 # Function to fetch cryptocurrency prices using CoinGecko API with error handling
 def fetch_crypto_prices(crypto_symbol, currency):
     api_url = f"https://api.coingecko.com/api/v3/simple/price?ids={crypto_symbol}&vs_currencies={currency}"
@@ -18,9 +21,8 @@ def fetch_crypto_prices(crypto_symbol, currency):
 
 # Function to fetch the latest news from NewsAPI with error handling
 def fetch_crypto_news(news_limit, keyword=None):
-    api_key = '27a3d671-51e1-4814-bf68-1636c499c559'  # Your API key
     query = f"cryptocurrency" if not keyword else keyword
-    news_url = f"https://newsapi.org/v2/everything?q={query}&language=en&pageSize={news_limit}&apiKey={api_key}"
+    news_url = f"https://newsapi.org/v2/everything?q={query}&language=en&pageSize={news_limit}&apiKey={NEWS_API_KEY}"
     try:
         response = requests.get(news_url)
         response.raise_for_status()  # Check if the request was successful
@@ -33,6 +35,9 @@ def fetch_crypto_news(news_limit, keyword=None):
         for i, headline in enumerate(headlines[:news_limit], 1):  # Print based on user limit
             print(f"{i}. {headline}")
         return headlines[:news_limit]
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP Error: {e.response.status_code} - {e.response.text}")
+        return None
     except requests.exceptions.RequestException as e:
         print(f"Failed to fetch news: {e}")
         return None
