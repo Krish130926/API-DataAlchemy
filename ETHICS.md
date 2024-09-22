@@ -1,23 +1,23 @@
-# Ethical Considerations
 
-## 1. Data Privacy & Transparency
+### ETHICS.md
 
-The project does not involve gathering any personal data or sensitive user information. The API used (CoinGecko) and the news scraped (CoinTelegraph) provide publicly available data. We ensure that no personally identifiable information (PII) is collected or used, and there is transparency regarding the sources of data.
+```markdown
+# Ethical Considerations for Cryptocurrency Price and News Scraper
 
-## 2. API and Web Scraping Ethics
+## Data Collection
+- **API Usage**: The project utilizes the CoinGecko API and NewsAPI, both of which have clear terms of service. The project adheres to these guidelines, ensuring that data is retrieved in a manner that complies with usage policies.
 
-- **Respecting Rate Limits**: We use appropriate rate limiting to avoid overwhelming the CoinGecko API and CoinTelegraph's servers. Our script is designed to retry failed requests with delays, ensuring we respect the API's and website's traffic capacity.
-  
-- **Respecting Terms of Service**: We have ensured that CoinGecko's API allows free access to the type of data we are gathering. We also adhere to CoinTelegraph's guidelines by limiting the amount of data we scrape and ensuring it is only for educational and non-commercial purposes.
+## User Privacy
+- **No Personal Data**: The script does not collect any personal user data. It only gathers publicly available information from the APIs and presents it to the user.
 
-## 3. Data Accuracy and Representation
+## Transparency
+- **Attribution**: The project credits the data sources used (CoinGecko and NewsAPI) within the README file, ensuring users are aware of where the data is coming from.
 
-While we aim to provide real-time data, cryptocurrency prices and news are volatile, and information can change rapidly. We include a disclaimer that the dataset is for informational purposes only and should not be considered financial advice.
+## Rate Limiting
+- **Respect for API Limits**: The script includes rate limiting to avoid overwhelming the APIs with requests, which could potentially lead to service disruptions or bans. This respects the resources of the API providers.
 
-## 4. Fair Use of Information
+## Ethical Implications of Cryptocurrency News
+- **Responsible Reporting**: The script focuses on gathering news that is relevant to cryptocurrency markets, aiming to provide users with information that can help them make informed decisions. However, users should critically evaluate the sources of the news articles and the context in which the information is presented.
 
-The news content scraped from CoinTelegraph is limited to headlines, which does not infringe on full article content or intellectual property. We encourage users to visit CoinTelegraph for complete articles, respecting the platform's right to distribute its content.
-
-## 5. Legal Compliance
-
-We ensure compliance with the laws regarding web scraping and API usage. The project is strictly for educational purposes, demonstrating how data gathering can be performed using public APIs and web scraping without violating ethical standards.
+## Conclusion
+By adhering to these ethical guidelines, the project aims to provide a valuable resource while respecting the rights and responsibilities associated with data collection and reporting.
