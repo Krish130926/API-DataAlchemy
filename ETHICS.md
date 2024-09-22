@@ -1,6 +1,4 @@
 
-### ETHICS.md
-
 # Ethical Considerations for Cryptocurrency Price and News Scraper
 
 ## Data Collection
