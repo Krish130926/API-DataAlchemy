@@ -30,12 +30,6 @@ While individual components of this dataset might be available for free (such as
 
 ## Running the Project
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/crypto-news-aggregator.git
-   cd crypto-news-aggregator
-
-
 Examples: 
 
 Input:
