@@ -24,8 +24,9 @@ def scrape_crypto_news(news_limit):
         page = requests.get(news_url)
         soup = BeautifulSoup(page.content, 'html.parser')
         
-        # Extract the headlines (example: headlines within <h2> tags)
-        headlines = [headline.text for headline in soup.find_all('h2', class_='post-card-inline__title')]
+        # Update this line based on the current website structure
+        # Extract news headlines from <a> tags with specific classes
+        headlines = [headline.text.strip() for headline in soup.find_all('a', class_='post-card-inline__title-link')]
         
         print(f"\nLatest Crypto News (showing top {news_limit} articles):")
         for i, headline in enumerate(headlines[:news_limit], 1):  # Print based on user limit
@@ -61,7 +62,7 @@ if __name__ == "__main__":
     crypto_symbol = input("Enter the cryptocurrency symbol (e.g., bitcoin, ethereum): ").lower()
     currency = input("Enter the currency for conversion (e.g., usd, eur): ").lower()
 
-    # Take user input for number of news articles to scrape
+    # Take user input for the number of news articles to scrape
     news_limit = int(input("Enter the number of news articles you want to see (e.g., 5): "))
 
     # Fetch crypto price with rate limiting and error handling
