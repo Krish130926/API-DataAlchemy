@@ -23,10 +23,10 @@ def fetch_crypto_news(news_limit, api_key):
         response = requests.get(news_url)
         response.raise_for_status()  # Check if the request was successful
         data = response.json()
-        
+
         articles = data.get("articles", [])
         headlines = [article['title'] for article in articles]
-        
+
         print(f"\nLatest Crypto News (showing top {news_limit} articles):")
         for i, headline in enumerate(headlines[:news_limit], 1):  # Print based on user limit
             print(f"{i}. {headline}")
@@ -64,12 +64,12 @@ if __name__ == "__main__":
     # Take user input for number of news articles to fetch
     news_limit = int(input("Enter the number of news articles you want to see (e.g., 5): "))
 
-    # Input your NewsAPI key here
-    api_key = 'your_newsapi_key_here'  # Replace with your actual NewsAPI key
+    # Your NewsAPI key
+    api_key = '27a3d671-51e1-4814-bf68-1636c499c559'  # Your actual NewsAPI key
 
     # Fetch crypto price with rate limiting and error handling
     price = rate_limited_request(fetch_crypto_prices, crypto_symbol, currency)
-    
+
     # Fetch latest news with rate limiting and error handling
     news_headlines = rate_limited_request(fetch_crypto_news, news_limit, api_key)
 
